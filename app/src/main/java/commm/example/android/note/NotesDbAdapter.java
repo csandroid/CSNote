@@ -96,9 +96,7 @@ public class NotesDbAdapter {
 			item.setTitle(c.getString(c.getColumnIndex(KEY_TITLE)));
 			item.setBody(c.getString(c.getColumnIndex(KEY_BODY)));
 
-
-				Log.v(LOGTAG, "Notebean-" + item.toString());
-
+			Log.v(LOGTAG, "Notebean-" + item.toString());
 
 			itemList.add(item);
 
