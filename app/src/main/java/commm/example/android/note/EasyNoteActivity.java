@@ -4,12 +4,15 @@ import android.app.ListActivity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.Button;
 import android.widget.ListView;
@@ -19,7 +22,9 @@ import java.util.List;
 
 
 
-public class EasyNoteActivity extends ListActivity {
+public class EasyNoteActivity extends AppCompatActivity {
+	ListView listView;
+	NotesAdapter adapter;
 
 	private String LOGTAG="EasyNoteActivity";
 	static List<Notebean> mydata;
@@ -42,12 +47,14 @@ public class EasyNoteActivity extends ListActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.notes_list);
 
+
+		listAllNotes();
         initView();
 
         db = new NotesDbAdapter(this);
         db.open();
-        listAllNotes();
-        this.registerForContextMenu(getListView());
+
+
     }
 
     void initView()
@@ -59,7 +66,32 @@ public class EasyNoteActivity extends ListActivity {
                 createNote();
             }
         });
-    }
+
+		listView = (ListView) findViewById(R.id.listview);
+
+		//建立Adapter并且绑定数据源
+		adapter= new NotesAdapter(this, R.layout.item, mydata);
+		//绑定 Adapter到控件
+		listView.setAdapter(adapter);
+		listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+				Notebean m=mydata.get(i);
+			//	Toast.makeText(MainActivity.this,m.getName()+"  "+m.getNumber(),Toast.LENGTH_SHORT).show();
+
+				Intent intent = new Intent(EasyNoteActivity.this	, NoteEditActivity.class);
+				//cur.moveToPosition(position);
+				intent.putExtra(NotesDbAdapter.KEY_TITLE,mydata.get(i).getTitle());
+				intent.putExtra(NotesDbAdapter.KEY_BODY, mydata.get(i).getBody());
+				intent.putExtra(NotesDbAdapter.KEY_ROWID, mydata.get(i).getId());
+				startActivityForResult(intent, ACTIVITY_EDIT);
+
+
+			}
+		});
+	}
+
+
     
     private void listAllNotes() {
 
@@ -74,7 +106,7 @@ public class EasyNoteActivity extends ListActivity {
     	
     	SimpleCursorAdapter notes =
     			new SimpleCursorAdapter(this, R.layout.notes_row, cur, from, to);
-    	this.setListAdapter(notes);
+    //	this.setListAdapter(notes);
     }
 
 	/* (non-Javadoc)
@@ -87,19 +119,7 @@ public class EasyNoteActivity extends ListActivity {
 		return true;
 	}
 
-	/* (non-Javadoc)
-	 * @see android.app.Activity#onMenuItemSelected(int, android.view.MenuItem)
-	 */
-	@Override
-	public boolean onMenuItemSelected(int featureId, MenuItem item) {
-		switch (item.getItemId()) {
-		case INSERT_ID:
-			createNote();
-			return true;
-		}
 
-		return super.onMenuItemSelected(featureId, item);
-	}
     
 	private void createNote() {
 		Intent i = new Intent(this, NoteEditActivity.class);
@@ -134,6 +154,7 @@ public class EasyNoteActivity extends ListActivity {
 	/* (non-Javadoc)
 	 * @see android.app.ListActivity#onListItemClick(android.widget.ListView, android.view.View, int, long)
 	 */
+/*
 	@Override
 	protected void onListItemClick(ListView l, View v, int position, long id) {
 		super.onListItemClick(l, v, position, id);
@@ -144,6 +165,7 @@ public class EasyNoteActivity extends ListActivity {
 		i.putExtra(NotesDbAdapter.KEY_ROWID, id);
 		startActivityForResult(i, ACTIVITY_EDIT);
 	}
+*/
 
 	/* (non-Javadoc)
 	 * @see android.app.Activity#onActivityResult(int, int, android.content.Intent)
