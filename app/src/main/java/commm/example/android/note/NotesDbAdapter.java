@@ -5,8 +5,14 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class NotesDbAdapter {
+
+	private String LOGTAG="NotesDbAdapter";
 	private static final String DB_NAME = "data1";
 	private static final int DB_VERSION = 2;
 	
@@ -67,11 +73,38 @@ public class NotesDbAdapter {
 		
 		return cur;
 	}
+
+
 	
 	public Cursor retrieveAllNotes() {
 		Cursor cur = db.query(TBL_NAME, new String[]{KEY_ROWID, KEY_TITLE, KEY_BODY},
 				null, null, null, null, null);
+
+
 		return cur;
+	}
+
+	public List<Notebean> getAllNotes()
+	{
+		Cursor c=retrieveAllNotes();
+		ArrayList<Notebean> itemList = new ArrayList<Notebean>();
+		while (c.moveToNext()) {
+
+			Notebean item = new Notebean();
+
+			item.setId(c.getString(c.getColumnIndex(KEY_ROWID)));
+			item.setTitle(c.getString(c.getColumnIndex(KEY_TITLE)));
+			item.setBody(c.getString(c.getColumnIndex(KEY_BODY)));
+
+
+				Log.v(LOGTAG, "Notebean-" + item.toString());
+
+
+			itemList.add(item);
+
+		}
+		return itemList;
+
 	}
 	
 	public boolean updateNote(long rowId, String title, String body) {

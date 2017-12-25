@@ -4,6 +4,7 @@ import android.app.ListActivity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Menu;
@@ -20,7 +21,8 @@ import commm.example.android.note1.R;
 
 public class EasyNoteActivity extends ListActivity {
 
-	static List<String> mydata;
+	private String LOGTAG="EasyNoteActivity";
+	static List<Notebean> mydata;
     Button btnAdd;
 
 	private static final int ACTIVITY_CREATE = 0;
@@ -60,10 +62,14 @@ public class EasyNoteActivity extends ListActivity {
     }
     
     private void listAllNotes() {
+
+
     	cur = db.retrieveAllNotes();
-    	startManagingCursor(cur);
-    	
-    	String[] from = new String[]{NotesDbAdapter.KEY_TITLE};
+
+		mydata=db.getAllNotes();
+		Log.v(LOGTAG,"List:"+mydata);
+
+		String[] from = new String[]{NotesDbAdapter.KEY_TITLE};
     	int[] to = new int[]{R.id.textrow};
     	
     	SimpleCursorAdapter notes =
