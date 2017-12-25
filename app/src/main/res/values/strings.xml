@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="hello">Hello World, EasyNoteActivity!</string>
+    <string name="app_name">记事本</string>
+    <string name="no_notes">没有笔记</string>
+
+    <color name="bgcolor">#3399CC</color>
+    <color name="textcolor">#000000</color>
+
+    <string name="create_note">Create note</string>
+    <string name="delete_note">Delete note</string>
+    <string name="confirm">Confirm</string>
+
+</resources>
