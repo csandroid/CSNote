@@ -17,7 +17,7 @@ import android.widget.SimpleCursorAdapter;
 
 import java.util.List;
 
-import commm.example.android.note1.R;
+
 
 public class EasyNoteActivity extends ListActivity {
 

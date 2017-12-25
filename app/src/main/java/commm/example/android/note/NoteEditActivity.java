@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import commm.example.android.note1.R;
+
 
 public class NoteEditActivity extends Activity {
 
