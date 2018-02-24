@@ -1,10 +1,8 @@
 package commm.example.android.note;
 
-import android.app.ListActivity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.ContextMenu;
@@ -27,12 +25,11 @@ public class EasyNoteActivity extends AppCompatActivity {
 	NotesAdapter adapter;
 
 	private String LOGTAG="EasyNoteActivity";
-	static List<Notebean> mydata;
+	static List<Notebean> notebeanList;
     Button btnAdd;
 
 	private static final int ACTIVITY_CREATE = 0;
 	private static final int ACTIVITY_EDIT = 1;
-
 	private static final int INSERT_ID = Menu.FIRST;
 	private static final int DELETE_ID = Menu.FIRST + 1;
 	
@@ -47,12 +44,13 @@ public class EasyNoteActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.notes_list);
 
+		db = new NotesDbAdapter(this);
+		db.open();
 
 		listAllNotes();
         initView();
 
-        db = new NotesDbAdapter(this);
-        db.open();
+
 
 
     }
@@ -70,20 +68,20 @@ public class EasyNoteActivity extends AppCompatActivity {
 		listView = (ListView) findViewById(R.id.listview);
 
 		//建立Adapter并且绑定数据源
-		adapter= new NotesAdapter(this, R.layout.item, mydata);
+		adapter= new NotesAdapter(this, R.layout.item, notebeanList);
 		//绑定 Adapter到控件
 		listView.setAdapter(adapter);
 		listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-				Notebean m=mydata.get(i);
+				Notebean m= notebeanList.get(i);
 			//	Toast.makeText(MainActivity.this,m.getName()+"  "+m.getNumber(),Toast.LENGTH_SHORT).show();
 
 				Intent intent = new Intent(EasyNoteActivity.this	, NoteEditActivity.class);
 				//cur.moveToPosition(position);
-				intent.putExtra(NotesDbAdapter.KEY_TITLE,mydata.get(i).getTitle());
-				intent.putExtra(NotesDbAdapter.KEY_BODY, mydata.get(i).getBody());
-				intent.putExtra(NotesDbAdapter.KEY_ROWID, mydata.get(i).getId());
+				intent.putExtra(NotesDbAdapter.KEY_TITLE, notebeanList.get(i).getTitle());
+				intent.putExtra(NotesDbAdapter.KEY_BODY, notebeanList.get(i).getBody());
+				intent.putExtra(NotesDbAdapter.KEY_ROWID, notebeanList.get(i).getId());
 				startActivityForResult(intent, ACTIVITY_EDIT);
 
 
@@ -96,10 +94,10 @@ public class EasyNoteActivity extends AppCompatActivity {
     private void listAllNotes() {
 
 
-    	cur = db.retrieveAllNotes();
+    //	cur = db.retrieveAllNotes();
 
-		mydata=db.getAllNotes();
-		Log.v(LOGTAG,"List:"+mydata);
+		notebeanList =db.getAllNotes();
+		Log.v(LOGTAG,"List:"+ notebeanList);
 
 		String[] from = new String[]{NotesDbAdapter.KEY_TITLE};
     	int[] to = new int[]{R.id.textrow};

@@ -62,7 +62,8 @@ public class NotesDbAdapter {
 		long rowId = db.insert(TBL_NAME, null, values);
 		return rowId;
 	}
-	
+
+	//根据ID来查询数据
 	public Cursor retrieveNote(long rowId) {
 		Cursor cur = db.query(true, TBL_NAME, new String[]{KEY_ROWID, KEY_TITLE, KEY_BODY},
 				KEY_ROWID + "=" + rowId, null, null, null, null, null);
