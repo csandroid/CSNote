@@ -59,8 +59,8 @@ public class NotesAdapter extends BaseAdapter {
 
         //为TextView控件设置相对应的文本
         Notebean m=myList.get(position);
-        titleText.setText("姓名:"+m.getTitle());
-        bodyText.setText("学号:"+m.getBody());
+        titleText.setText(""+m.getTitle());
+        bodyText.setText(""+m.getBody());
 
 
         //为布局设置文本数据后返回，这个convertView就是ListView的子项

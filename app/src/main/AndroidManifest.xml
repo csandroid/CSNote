@@ -12,7 +12,7 @@
         <activity
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:label="@string/app_name"
-            android:name="commm.example.android.note.EasyNoteActivity" >
+            android:name="commm.example.android.note.MainActivity" >
             <intent-filter >
                 <action android:name="android.intent.action.MAIN" />
 
@@ -21,7 +21,9 @@
         </activity>
 
 
-        <activity android:name="commm.example.android.note.NoteEditActivity" />
+        <activity android:name="commm.example.android.note.EditActivity" />
+        <activity android:name="commm.example.android.note.NewActivity" />
+
     </application>
 
 </manifest>
