@@ -13,12 +13,12 @@ public class NewActivity extends Activity {
 	private EditText bodyEdit;
 	private Button confirmBtn;
 	private Long rowId;
-	private NotesDbAdapter db = null;
+	private NoteDbHelper db = null;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.newactivity_layout);
-		db = new NotesDbAdapter(this);
+		db = new NoteDbHelper(this);
 		db.open();
 		titleEdit = (EditText) findViewById(R.id.title);
 		bodyEdit = (EditText) findViewById(R.id.body);

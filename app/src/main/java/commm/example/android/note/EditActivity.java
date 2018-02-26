@@ -1,7 +1,6 @@
 package commm.example.android.note;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -14,12 +13,12 @@ public class EditActivity extends Activity {
 	private EditText bodyEdit;
 	private Button confirmBtn;
 	private Long rowId;
-	private NotesDbAdapter db = null;
+	private NoteDbHelper db = null;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.note_edit);
-		db = new NotesDbAdapter(this);
+		db = new NoteDbHelper(this);
 		db.open();
 		titleEdit = (EditText) findViewById(R.id.title);
 		bodyEdit = (EditText) findViewById(R.id.body);
@@ -28,9 +27,9 @@ public class EditActivity extends Activity {
 		rowId = null;
 		Bundle extras = getIntent().getExtras();
 		if (extras != null) {
-			String title = extras.getString(NotesDbAdapter.KEY_TITLE);
-			String body = extras.getString(NotesDbAdapter.KEY_BODY);
-			rowId = extras.getLong(NotesDbAdapter.KEY_ROWID);
+			String title = extras.getString(NoteDbHelper.KEY_TITLE);
+			String body = extras.getString(NoteDbHelper.KEY_BODY);
+			rowId = extras.getLong(NoteDbHelper.KEY_ROWID);
 
 			if (title != null)
 				titleEdit.setText(title);

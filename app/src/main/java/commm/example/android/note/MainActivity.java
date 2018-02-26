@@ -9,6 +9,8 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
+
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -24,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
 	private static final int INSERT_ID = Menu.FIRST;
 	private static final int DELETE_ID = Menu.FIRST + 1;
 
-	private NotesDbAdapter db = null;
+	private NoteDbHelper db = null;
 	private Cursor cur = null;
 
     @Override
@@ -32,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.mainactivity_layout);
 
-		db = new NotesDbAdapter(this);
+		db = new NoteDbHelper(this);
 		db.open();
 
 		notebeanList =db.getAllNotes();
@@ -63,11 +65,20 @@ public class MainActivity extends AppCompatActivity {
 
 				Intent intent = new Intent(MainActivity.this	, EditActivity.class);
 
-				intent.putExtra(NotesDbAdapter.KEY_TITLE, notebeanList.get(i).getTitle());
-				intent.putExtra(NotesDbAdapter.KEY_BODY, notebeanList.get(i).getBody());
-				intent.putExtra(NotesDbAdapter.KEY_ROWID, notebeanList.get(i).getId());
+				intent.putExtra(NoteDbHelper.KEY_TITLE, notebeanList.get(i).getTitle());
+				intent.putExtra(NoteDbHelper.KEY_BODY, notebeanList.get(i).getBody());
+				intent.putExtra(NoteDbHelper.KEY_ROWID, notebeanList.get(i).getId());
 				startActivity(intent);
 
+			}
+		});
+
+		listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+			@Override
+			public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+
+				Toast.makeText(MainActivity.this, "长按:"+position, Toast.LENGTH_SHORT).show();
+				return true;
 			}
 		});
 	}

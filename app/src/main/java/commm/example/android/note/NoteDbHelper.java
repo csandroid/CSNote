@@ -4,15 +4,14 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class NotesDbAdapter {
+public class NoteDbHelper {
 
-	private String LOGTAG="NotesDbAdapter";
+	private String LOGTAG="NoteDbHelper";
 	private static final String DB_NAME = "data1";
 	private static final int DB_VERSION = 2;
 	
@@ -22,31 +21,18 @@ public class NotesDbAdapter {
 	static final String KEY_ROWID = "_id";
 
 	private Context ctx = null;
-	private SQLiteOpenHelper dbHelper = null;
+	private NoteSQLiteHelper dbHelper = null;
 	private SQLiteDatabase db = null;
 
-	public NotesDbAdapter(Context ctx) {
+	public NoteDbHelper(Context ctx) {
 		this.ctx = ctx;		
 	}
 	
-	public NotesDbAdapter open() {
-		dbHelper = new SQLiteOpenHelper(ctx, DB_NAME, null, DB_VERSION) {
+	public NoteDbHelper open() {
+		dbHelper = new NoteSQLiteHelper(ctx, DB_NAME, null, DB_VERSION) ;
 
-			@Override
-			public void onCreate(SQLiteDatabase db) {
-				db.execSQL("create table notes (_id integer primary key autoincrement, " +
-						"title text not null, body text not null)");
-			}
-
-			@Override
-			public void onUpgrade(SQLiteDatabase db, int oldVer, int newVer) {
-				//TODO on DB upgrade
-			}
-			
-		};
-		
 		db = dbHelper.getWritableDatabase();
-		
+
 		return this;
 	}
 	
