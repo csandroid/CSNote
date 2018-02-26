@@ -1,16 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:background="@mipmap/article_bg"
-    android:orientation="vertical" >
+   >
 
-    <Button
-        android:text="增加笔记"
-        android:id="@+id/btnAdd"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+
     <ListView
+        android:layout_alignParentTop="true"
+        android:layout_above="@id/btnAdd"
         android:divider="@color/transparency"
         android:dividerHeight="20dp"
         android:layout_margin="20dp"
@@ -19,7 +17,11 @@
         android:id="@+id/listview"
         />
 
-
-
-
-</LinearLayout>
+    <Button
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/button_bg"
+        android:text="增加笔记"
+        android:id="@+id/btnAdd"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+</RelativeLayout>

@@ -1,6 +1,5 @@
 package commm.example.android.note;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -18,7 +17,7 @@ public class NewActivity extends AppCompatActivity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.newactivity_layout);
+		setContentView(R.layout.editactivity_layout);
 		db = new NoteDbHelper(this);
 		db.open();
 		titleEdit = (EditText) findViewById(R.id.title);

@@ -6,15 +6,16 @@ package commm.example.android.note;
 
 public class Notebean {
 
-    private String id;
+    private int id;
     private String title;
     private String body;
 
-    public String getId() {
+
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 

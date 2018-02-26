@@ -1,10 +1,9 @@
 package commm.example.android.note;
 
 import android.content.Intent;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Menu;
+
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -21,13 +20,7 @@ public class MainActivity extends AppCompatActivity {
 	static List<Notebean> notebeanList;
     Button btnAdd;
 
-	private static final int ACTIVITY_CREATE = 0;
-	private static final int ACTIVITY_EDIT = 1;
-	private static final int INSERT_ID = Menu.FIRST;
-	private static final int DELETE_ID = Menu.FIRST + 1;
-
 	private NoteDbHelper db = null;
-	private Cursor cur = null;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -55,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
 		listView = (ListView) findViewById(R.id.listview);
 
 		//建立Adapter并且绑定数据源
-		adapter= new NotesAdapter(this, R.layout.item, notebeanList);
+		adapter= new NotesAdapter(this, R.layout.note_item, notebeanList);
 		//绑定 Adapter到控件
 		listView.setAdapter(adapter);
 		listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -77,7 +70,12 @@ public class MainActivity extends AppCompatActivity {
 			@Override
 			public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
 
+				//长按删除
 				Toast.makeText(MainActivity.this, "长按:"+position, Toast.LENGTH_SHORT).show();
+
+				db.deleteNote(notebeanList.get(position).getId());
+				notebeanList.remove(position);
+
 				return true;
 			}
 		});

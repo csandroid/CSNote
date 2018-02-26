@@ -40,12 +40,12 @@ public class NoteDbHelper {
 		dbHelper.close();
 	}
 	
-	public long createNote(String title, String body) {
+	public int createNote(String title, String body) {
 		ContentValues values = new ContentValues();
 		values.put(KEY_TITLE, title);
 		values.put(KEY_BODY, body);
-		
-		long rowId = db.insert(TBL_NAME, null, values);
+
+		int rowId = (int)db.insert(TBL_NAME, null, values);
 		return rowId;
 	}
 
@@ -79,7 +79,7 @@ public class NoteDbHelper {
 
 			Notebean item = new Notebean();
 
-			item.setId(c.getString(c.getColumnIndex(KEY_ROWID)));
+			item.setId(c.getInt(c.getColumnIndex(KEY_ROWID)));
 			item.setTitle(c.getString(c.getColumnIndex(KEY_TITLE)));
 			item.setBody(c.getString(c.getColumnIndex(KEY_BODY)));
 
