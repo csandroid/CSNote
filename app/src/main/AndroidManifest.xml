@@ -21,8 +21,8 @@
         </activity>
 
 
-        <activity android:name="commm.example.android.note.EditActivity" />
-        <activity android:name="commm.example.android.note.NewActivity" />
+        <activity  android:theme="@style/Theme.AppCompat.Light.NoActionBar" android:name="commm.example.android.note.EditActivity" />
+        <activity android:theme="@style/Theme.AppCompat.Light.NoActionBar" android:name="commm.example.android.note.NewActivity" />
 
     </application>
 
