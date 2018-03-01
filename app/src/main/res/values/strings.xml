@@ -3,5 +3,6 @@
 
     <string name="app_name">记事本</string>
     <string name="confirm">提交</string>
+    <string name="add">增加笔记</string>
 
 </resources>

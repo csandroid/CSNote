@@ -13,9 +13,9 @@ public class NoteDbHelper {
 
 	private String LOGTAG="NoteDbHelper";
 	private static final String DB_NAME = "data1";
-	private static final int DB_VERSION = 2;
+	private static final int DB_VERSION = 1;
 	
-	private static final String TBL_NAME = "notes";
+	private static final String TABLE_NAME = "notes";
 	static final String KEY_TITLE = "title";
 	static final String KEY_BODY = "body";
 	static final String KEY_ROWID = "_id";
@@ -45,13 +45,13 @@ public class NoteDbHelper {
 		values.put(KEY_TITLE, title);
 		values.put(KEY_BODY, body);
 
-		int rowId = (int)db.insert(TBL_NAME, null, values);
+		int rowId = (int)db.insert(TABLE_NAME, null, values);
 		return rowId;
 	}
 
 	//根据ID来查询数据
 	public Cursor retrieveNote(long rowId) {
-		Cursor cur = db.query(true, TBL_NAME, new String[]{KEY_ROWID, KEY_TITLE, KEY_BODY},
+		Cursor cur = db.query(true, TABLE_NAME, new String[]{KEY_ROWID, KEY_TITLE, KEY_BODY},
 				KEY_ROWID + "=" + rowId, null, null, null, null, null);
 		
 		if (cur != null) {
@@ -64,7 +64,7 @@ public class NoteDbHelper {
 
 	
 	public Cursor retrieveAllNotes() {
-		Cursor cur = db.query(TBL_NAME, new String[]{KEY_ROWID, KEY_TITLE, KEY_BODY},
+		Cursor cur = db.query(TABLE_NAME, new String[]{KEY_ROWID, KEY_TITLE, KEY_BODY},
 				null, null, null, null, null);
 
 
@@ -75,6 +75,7 @@ public class NoteDbHelper {
 	{
 		Cursor c=retrieveAllNotes();
 		ArrayList<Notebean> itemList = new ArrayList<Notebean>();
+		c.moveToFirst();
 		while (c.moveToNext()) {
 
 			Notebean item = new Notebean();
@@ -91,18 +92,18 @@ public class NoteDbHelper {
 		return itemList;
 
 	}
-	
+
 	public boolean updateNote(long rowId, String title, String body) {
 		ContentValues values = new ContentValues();
 		values.put(KEY_TITLE, title);
 		values.put(KEY_BODY, body);
 		
-		int updatedRows = db.update(TBL_NAME, values, KEY_ROWID + "=" + rowId, null);
+		int updatedRows = db.update(TABLE_NAME, values, KEY_ROWID + "=" + rowId, null);
 		return updatedRows > 0;
 	}
 
 	public boolean deleteNote(long rowId) {
-		int deletedRows = db.delete(TBL_NAME, KEY_ROWID + "=" + rowId, null);
+		int deletedRows = db.delete(TABLE_NAME, KEY_ROWID + "=" + rowId, null);
 		return deletedRows > 0;
 	}
 	

@@ -12,7 +12,7 @@ public class EditActivity extends AppCompatActivity {
 	private EditText titleEdit;
 	private EditText bodyEdit;
 	private Button confirmBtn;
-	private Long rowId;
+	private int rowId;
 	private NoteDbHelper db = null;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -24,12 +24,12 @@ public class EditActivity extends AppCompatActivity {
 		bodyEdit = (EditText) findViewById(R.id.body);
 		confirmBtn = (Button) findViewById(R.id.confirm);
 
-		rowId = null;
+
 		Bundle extras = getIntent().getExtras();
 		if (extras != null) {
 			String title = extras.getString(NoteDbHelper.KEY_TITLE);
 			String body = extras.getString(NoteDbHelper.KEY_BODY);
-			rowId = extras.getLong(NoteDbHelper.KEY_ROWID);
+			rowId = extras.getInt(NoteDbHelper.KEY_ROWID);
 
 			if (title != null)
 				titleEdit.setText(title);

@@ -15,6 +15,7 @@
 
     <EditText
         android:layout_below="@id/title"
+        android:layout_above="@id/confirm"
         android:textColor="@color/black"
         android:id="@+id/body"
         android:layout_width="match_parent"
@@ -27,7 +28,7 @@
         android:layout_alignParentBottom="true"
         android:id="@+id/confirm"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+      android:layout_height="wrap_content"
         android:text="@string/confirm" />
 
 </RelativeLayout>

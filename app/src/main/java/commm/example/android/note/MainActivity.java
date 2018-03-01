@@ -17,7 +17,7 @@ public class MainActivity extends AppCompatActivity {
 	NotesAdapter adapter;
 
 	private String LOGTAG="MainActivity";
-	static List<Notebean> notebeanList;
+	 List<Notebean> notebeanList;
     Button btnAdd;
 
 	private NoteDbHelper db = null;
@@ -26,18 +26,33 @@ public class MainActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.mainactivity_layout);
+		initData();
 
-		db = new NoteDbHelper(this);
-		db.open();
 
-		notebeanList =db.getAllNotes();
-        initView();
+
 
     }
 
-    void initView()
+	void  initData(){
+		db = new NoteDbHelper(this);
+		db.open();
+	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+
+		notebeanList =db.getAllNotes();
+		initView();
+	}
+
+	void initView()
     {
-        btnAdd=(Button) findViewById(R.id.btnAdd);
+
+
+
+
+		btnAdd=(Button) findViewById(R.id.btnAdd);
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -71,11 +86,11 @@ public class MainActivity extends AppCompatActivity {
 			public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
 
 				//长按删除
-				Toast.makeText(MainActivity.this, "长按:"+position, Toast.LENGTH_SHORT).show();
+				Toast.makeText(MainActivity.this, "删除:"+position, Toast.LENGTH_SHORT).show();
 
 				db.deleteNote(notebeanList.get(position).getId());
 				notebeanList.remove(position);
-
+				adapter.notifyDataSetChanged();
 				return true;
 			}
 		});

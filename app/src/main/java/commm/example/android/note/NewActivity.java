@@ -12,7 +12,7 @@ public class NewActivity extends AppCompatActivity {
 	private EditText titleEdit;
 	private EditText bodyEdit;
 	private Button confirmBtn;
-	private Long rowId;
+
 	private NoteDbHelper db = null;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -24,7 +24,7 @@ public class NewActivity extends AppCompatActivity {
 		bodyEdit = (EditText) findViewById(R.id.body);
 		confirmBtn = (Button) findViewById(R.id.confirm);
 
-		rowId = null;
+
 
 		
 		confirmBtn.setOnClickListener(new View.OnClickListener() {
